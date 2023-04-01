@@ -21,11 +21,11 @@ class Form(db.Model):
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
-        date = request.POST.get('date')
-        occupation = request.POST.get('occupation')
+        first_name = request.form['first_name']
+        last_name = request.form['last_name']
+        email = request.form['email']
+        date = request.form['date']
+        occupation = request.form['occupation']
     return render_template('index.html')
 
 

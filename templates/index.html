@@ -14,7 +14,7 @@
   <body>
     <div class="container">
       <h1 class="mt-4 mb-4">Job Application Form</h1>
-      <form>
+      <form methdo="post">
         <div class="form-group mb-4">
           <label for="first_name">First Name:</label>
           <input
@@ -64,6 +64,7 @@
               type="radio"
               id="employed"
               name="occupation"
+              value="Employed"
               required
             />
             <label class="btn btn-outline-secondary" for="employed"
@@ -75,6 +76,7 @@
               type="radio"
               id="unemployed"
               name="occupation"
+              value="Unemployed"
               required
             />
             <label class="btn btn-outline-secondary" for="unemployed"
@@ -86,6 +88,7 @@
               type="radio"
               id="self-employed"
               name="occupation"
+              value="Self-Employed"
               required
             />
             <label class="btn btn-outline-secondary" for="self-employed"
@@ -97,6 +100,7 @@
               type="radio"
               id="student"
               name="occupation"
+              value="Student"
               required
             />
             <label class="btn btn-outline-secondary" for="student"
@@ -104,7 +108,7 @@
             >
           </div>
         </div>
-        <button class="btn btn-secondary" type="button">Submit</button>
+        <button class="btn btn-secondary" type="submit">Submit</button>
       </form>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

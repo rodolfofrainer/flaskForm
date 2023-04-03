@@ -1,13 +1,21 @@
-import os
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, request, flash
+from flask_mail import Mail, Message
 from datetime import datetime
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = 'mykey'
+app.config["SECRET_KEY"] = "myapplication123"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 465
+app.config["MAIL_USE_SSL"] = True
+app.config["MAIL_USERNAME"] = 'rodolfofrainerautomated'
+app.config["MAIL_PASSWORD"] = 'bzccglrarhqghkuo'
+
 db = SQLAlchemy(app)
+
+mail = Mail(app)
 
 
 class Form(db.Model):
@@ -19,7 +27,7 @@ class Form(db.Model):
     occupation = db.Column(db.String(25))
 
 
-@app.route('/', methods=["GET", "POST"])
+@ app.route('/', methods=["GET", "POST"])
 def index():
     print(request.method)
     if request.method == "POST":
@@ -39,7 +47,27 @@ def index():
         )
         db.session.add(form)
         db.session.commit()
-        flash(f'{first_name.title()}, Your form was submitted successfully', 'success')
+
+        message_body = f'Thanks for you submission, {first_name}'
+        f"""Here is your data:
+            First Name: {first_name.title()}
+            Last Name: {last_name.title()}
+            Email:{email}
+            Date: {date_obj}
+            Occupation: {occupation}"""
+        message = Message(subject='New form submission',
+                          sender=app.config["MAIL_USERNAME"],
+                          recipients=[email],
+                          body=message_body)
+        try:
+            mail.send(message)
+            flash(
+                f'{first_name.title()}, Your form was submitted successfully', 'success')
+        except Exception as e:
+            print(f"An error occurred while sending the email: {e}")
+            flash(
+                "There was an error submitting your form. Please try again later.", "danger")
+
     return render_template('index.html')
 
 

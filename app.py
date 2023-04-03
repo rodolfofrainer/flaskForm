@@ -1,11 +1,11 @@
 import os
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash
 from datetime import datetime
 
 app = Flask(__name__)
 
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+app.config['SECRET_KEY'] = 'mykey'
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///data.db"
 db = SQLAlchemy(app)
 
@@ -39,6 +39,7 @@ def index():
         )
         db.session.add(form)
         db.session.commit()
+        flash(f'{first_name.title()}, Your form was submitted successfully', 'success')
     return render_template('index.html')
 
 
